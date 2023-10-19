@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 // import jwtDecode from "jwt-decode";
 
-const SignIn: React.FC = (props) => {
+const Login: React.FC = (props) => {
   const navigate = useNavigate();
   //   const userCtx = useContext(UserContext);
   //   const [email, setEmail] = useState("");
@@ -61,7 +61,12 @@ const SignIn: React.FC = (props) => {
               // onChange={(e) => setPassword(e.target.value)}
             />
 
-            <Button variant="contained" color="secondary" onClick={handleLogin}>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ width: "20%" }}
+              onClick={handleLogin}
+            >
               Login
             </Button>
 
@@ -89,4 +94,4 @@ const SignIn: React.FC = (props) => {
   );
 };
 
-export default SignIn;
+export default Login;
