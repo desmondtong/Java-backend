@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 // import useFetch from "../hooks/useFetch";
 import {
   Container,
@@ -7,20 +7,21 @@ import {
   TextField,
   Button,
   Stack,
+  MenuItem,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-// import DistrictEnums from "../enums/districtEnums";
 
 const Register: React.FC = (props) => {
   //   const fetchData = useFetch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [zip, setZip] = useState("");
-  const [district, setDistrict] = useState("");
+  const roleRef = useRef<HTMLInputElement>();
 
   const [isInvalid, setIsInvalid] = useState(false);
 
   const navigate = useNavigate();
+
+  const roles = ["USER", "ADMIN"];
 
   const registerUser = async () => {
     // const res = await fetchData("/auth/register", "PUT", {
@@ -64,30 +65,30 @@ const Register: React.FC = (props) => {
               sx={{ width: "25%" }}
               onChange={(e) => setEmail(e.target.value)}
             />
-
             <TextField
               id="outlined-basic"
               label="Password"
               variant="outlined"
-              type="password"
               sx={{ width: "25%" }}
               onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <TextField
-              error={isInvalid}
-              id="outlined-basic"
-              label="Zip Code"
-              variant="outlined"
-              sx={{ width: "25%" }}
               helperText={isInvalid && "Invalid zip code"}
             />
-            {/* <Stack
-              direction="row"
-              spacing={2}
-              justifyContent="space-between"
-              width="25%"
-            > */}
+            <TextField
+              select
+              id="outlined-basic"
+              label="Role"
+              variant="outlined"
+              sx={{ width: "25%" }}
+              defaultValue=""
+              inputRef={roleRef}
+            >
+              {roles.map((item, idx) => (
+                <MenuItem key={idx} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </TextField>
+
             <Button
               variant="contained"
               color="secondary"
