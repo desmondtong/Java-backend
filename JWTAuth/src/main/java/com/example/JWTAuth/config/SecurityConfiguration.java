@@ -38,8 +38,7 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 // want to call jwtAuthFilter before UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-
+        http.cors(AbstractHttpConfigurer::disable);
         return http.build();
     }
 
