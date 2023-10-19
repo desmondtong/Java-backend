@@ -13,11 +13,11 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 // import jwtDecode from "jwt-decode";
 
-const Login: React.FC = (props) => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
   //   const userCtx = useContext(UserContext);
-  //   const [email, setEmail] = useState("");
-  //   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   //   const fetchData = useFetch();
   const handleLogin = async () => {
     // const res = await fetchData("/auth/login", "POST", { email, password });
@@ -51,14 +51,14 @@ const Login: React.FC = (props) => {
               label="Email"
               variant="outlined"
               sx={{ width: "25%" }}
-              // onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               label="Password"
               type="password"
               variant="outlined"
               sx={{ width: "25%" }}
-              // onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <Button
