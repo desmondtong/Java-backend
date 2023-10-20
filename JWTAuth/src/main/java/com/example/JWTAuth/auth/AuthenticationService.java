@@ -6,6 +6,7 @@ import com.example.JWTAuth.user.User;
 import com.example.JWTAuth.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        // check if email already exist
         Optional<User> userOptional = repository
                 .findByEmail(request.getEmail());
         if (userOptional.isPresent()) {
@@ -43,9 +45,12 @@ public class AuthenticationService {
                 .build();
         repository.save(user);
 
-        // create a token to return
+        // create claim and generate token
+        // return token to frontend
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", request.getRole());
+        extraClaims.put("firstname", user.getFirstname());
+        extraClaims.put("lastname", user.getLastname());
 
         var jwtToken = jwtService.generateToken(extraClaims, user);
         return AuthenticationResponse.builder()
@@ -54,6 +59,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        // check if user exist
         Optional<User> userOptional = repository
                 .findByEmail(request.getEmail());
         if (userOptional.isEmpty()) {
@@ -62,17 +68,25 @@ public class AuthenticationService {
                     .build();
         }
 
-        // authenticate based on email and password
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
+        // check if password is matches
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e){
+            return AuthenticationResponse.builder()
+                    .message("Invalid password!")
+                    .build();
+        }
+
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
 
-        // create a token to return
+        // create claim and generate token
+        // return token to frontend
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", user.getRole());
         extraClaims.put("firstname", user.getFirstname());
