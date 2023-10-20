@@ -1,6 +1,5 @@
 package com.example.JWTAuth.config;
 
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,8 +37,6 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 // want to call jwtAuthFilter before UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        http.cors(AbstractHttpConfigurer::disable);
         return http.build();
     }
-
 }
