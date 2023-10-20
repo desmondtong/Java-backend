@@ -1,20 +1,22 @@
-import React, { useState } from "react";
-import useFetch from "../hooks/useFetch";
 import {
-  Container,
-  Typography,
-  Box,
-  TextField,
-  Button,
-  Stack,
-  MenuItem,
+    Box,
+    Button,
+    Container,
+    MenuItem,
+    Stack,
+    TextField,
+    Typography,
 } from "@mui/material";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../context/user";
+import useFetch from "../hooks/useFetch";
 import { data } from "../interfaces";
 
 const Register: React.FC = () => {
   const fetchData = useFetch();
   const navigate = useNavigate();
+  const userCtx = useContext(UserContext);
 
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
@@ -36,8 +38,8 @@ const Register: React.FC = () => {
     });
 
     if (res.ok) {
-      console.log(res.data);
-      //   navigate("/profile-setup");
+      userCtx?.setToken(res.data.token);
+    //   navigate("/homepage");
     } else {
       alert(JSON.stringify(res.data));
       console.log(res.data);
@@ -47,6 +49,7 @@ const Register: React.FC = () => {
   return (
     <>
       <Container maxWidth="lg">
+        {JSON.stringify(userCtx?.token)}
         <Box>
           <Stack
             direction="column"
@@ -112,13 +115,12 @@ const Register: React.FC = () => {
               color="secondary"
               sx={{ width: "20%" }}
               onClick={() => {
-                navigate("/login");
+                navigate("/");
               }}
             >
               Cancel
             </Button>
           </Stack>
-          {/* </Stack> */}
         </Box>
       </Container>
     </>

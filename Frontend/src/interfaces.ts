@@ -1,23 +1,36 @@
 export interface useFetchType {
   (
-    endpoint: String,
+    endpoint: string,
     method?: string,
-    body?: Object,
-    token?: String,
+    body?: object,
+    token?: string,
     isExtAPI?: boolean
   ): Promise<{}>;
 }
 
 export interface data {
-  status?: String;
-  errors?: String;
-  message?: String;
-  msg?: String;
-  ok?: Boolean;
+  status?: string;
+  errors?: string;
+  message?: string;
+  msg?: string;
+  ok?: boolean;
   data?: any;
 }
 
 export interface returnValue {
-  ok: Boolean;
+  ok: boolean;
   data: data | any;
+}
+
+export interface UserContextType {
+  token: string;
+  setToken: React.Dispatch<React.SetStateAction<string>>;
+  userInfo: UserInfo;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
+}
+
+export interface UserInfo {
+  firstName?: string;
+  lastName?: string;
+  role?: string;
 }

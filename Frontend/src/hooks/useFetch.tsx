@@ -1,7 +1,7 @@
 import { useFetchType, data, returnValue } from "../interfaces";
 
 const useFetch = () => {
-  const fetchData: useFetchType = async (endpoint, method, body, token) => {
+  const fetchData: useFetchType = async (endpoint, method, body) => {
     const path = import.meta.env.VITE_SERVER + endpoint;
 
     const res = await fetch(path, {
@@ -14,7 +14,6 @@ const useFetch = () => {
     });
 
     const data: data = await res.json();
-
     let returnValue: returnValue;
     if (res.ok) {
       if (data.status === "error") {

@@ -1,36 +1,46 @@
-import React, { useContext, useState } from "react";
-// import useFetch from "../hooks/useFetch";
 import {
-  Container,
-  Typography,
-  Box,
-  TextField,
-  Link,
-  Stack,
+    Box,
+    Container,
+    Link,
+    Stack,
+    TextField,
+    Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-// import UserContext from "../context/user";
+import jwtDecode from "jwt-decode";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import jwtDecode from "jwt-decode";
+import UserContext from "../context/user";
+import useFetch from "../hooks/useFetch";
+import { data } from "../interfaces";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  //   const userCtx = useContext(UserContext);
+  const userCtx = useContext(UserContext);
+  const fetchData = useFetch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //   const fetchData = useFetch();
+
   const handleLogin = async () => {
-    // const res = await fetchData("/auth/login", "POST", { email, password });
-    // if (res.ok) {
-    //   userCtx.setAccessToken(res.data.access);
-    //   localStorage.setItem("accessToken", JSON.stringify(res.data.access));
-    //   const decoded = jwtDecode(res.data.access);
-    //   userCtx.setUserId(decoded.id);
-    //   localStorage.setItem("userId", JSON.stringify(decoded.id));
-    //   navigate(`/profile/${decoded.id}`);
-    // } else {
-    //   alert(JSON.stringify(res.data));
-    // }
+    const res: data = await fetchData("/api/v1/auth/authenticate", "POST", {
+      email,
+      password,
+    });
+    console.log(res);
+    if (res.ok) {
+      const decoded: any = jwtDecode(res.data.token);
+      console.log(decoded);
+      userCtx?.setToken(decoded.token);
+      userCtx?.setUserInfo({
+        firstName: decoded.firstname,
+        lastName: decoded.lastname,
+        role: decoded.role,
+      });
+      navigate("/homepage");
+    } else {
+      alert(JSON.stringify(res.data));
+    }
   };
 
   return (
@@ -71,7 +81,6 @@ const Login: React.FC = () => {
             </Button>
 
             <Typography
-              // variant="subtitle"
               textAlign="start"
               margin="1rem 0"
               sx={{ fontSize: "12px" }}
