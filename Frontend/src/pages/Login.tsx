@@ -30,13 +30,15 @@ const Login: React.FC = () => {
     console.log(res);
     if (res.ok) {
       const decoded: any = jwtDecode(res.data.token);
-      console.log(decoded);
+
+      // set token and userinfo from decoded claims
       userCtx?.setToken(decoded.token);
       userCtx?.setUserInfo({
         firstName: decoded.firstname,
         lastName: decoded.lastname,
         role: decoded.role,
       });
+
       navigate("/homepage");
     } else {
       alert(JSON.stringify(res.data));

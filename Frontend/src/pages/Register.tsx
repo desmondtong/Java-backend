@@ -1,11 +1,11 @@
 import {
-    Box,
-    Button,
-    Container,
-    MenuItem,
-    Stack,
-    TextField,
-    Typography,
+  Box,
+  Button,
+  Container,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -38,8 +38,15 @@ const Register: React.FC = () => {
     });
 
     if (res.ok) {
+      // set token and userinfo from registered info
       userCtx?.setToken(res.data.token);
-    //   navigate("/homepage");
+      userCtx?.setUserInfo({
+        firstName: firstname,
+        lastName: lastname,
+        role: role,
+      });
+
+      navigate("/homepage");
     } else {
       alert(JSON.stringify(res.data));
       console.log(res.data);
@@ -49,7 +56,6 @@ const Register: React.FC = () => {
   return (
     <>
       <Container maxWidth="lg">
-        {JSON.stringify(userCtx?.token)}
         <Box>
           <Stack
             direction="column"
