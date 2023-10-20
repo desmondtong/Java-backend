@@ -75,6 +75,8 @@ public class AuthenticationService {
         // create a token to return
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", user.getRole());
+        extraClaims.put("firstname", user.getFirstname());
+        extraClaims.put("lastname", user.getLastname());
 
         var jwtToken = jwtService.generateToken(extraClaims, user);
         return AuthenticationResponse.builder()
