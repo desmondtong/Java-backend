@@ -31,13 +31,17 @@ const HomePage: React.FC = () => {
           <Button variant="contained" color="secondary" onClick={handleLogout}>
             Logout
           </Button>
-          <Button
-            variant="contained"
-            color="info"
-            onClick={() => navigate("/adminonly")}
-          >
-            ADMIN ONLY ACCESS ⛔️
-          </Button>
+
+          {/* only show button for ADMIN */}
+          {role === "ADMIN" && (
+            <Button
+              variant="contained"
+              color="info"
+              onClick={() => navigate("/adminonly")}
+            >
+              ADMIN ONLY ACCESS ⛔️
+            </Button>
+          )}
         </Stack>
       </Container>
     </>
