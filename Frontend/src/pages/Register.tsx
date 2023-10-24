@@ -27,7 +27,7 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [role, setRole] = useState<string>("");
 
-  const roles = [t("User"), t("Admin")];
+  const roles = [t("USER"), t("ADMIN")];
 
   const registerUser = async () => {
     const res: data = await fetchData("/api/v1/auth/register", "POST", {

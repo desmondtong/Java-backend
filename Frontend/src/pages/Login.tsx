@@ -35,7 +35,6 @@ const Login: React.FC = () => {
       if (res.data.message) return alert(JSON.stringify(res.data.message));
 
       const decoded: any = jwtDecode(res.data.token);
-      console.log(decoded);
 
       // set token and userinfo from decoded claims
       userCtx?.setToken(decoded.token);

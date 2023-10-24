@@ -1,11 +1,13 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Button, Container, Link, Stack, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../context/user";
+import { useTranslation } from "react-i18next";
 
 const HomePage: React.FC = () => {
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const firstName = userCtx?.userInfo.firstName;
   const lastName = userCtx?.userInfo.lastName;
@@ -27,11 +29,15 @@ const HomePage: React.FC = () => {
           spacing={2}
           height="100vh"
         >
-          <Typography variant="h3">{`Welcome, ${firstName} ${lastName}!`}</Typography>
-          <Typography variant="body1">{`Email: ${email}`}</Typography>
-          <Typography variant="body1">{`Role: ${role}`}</Typography>
+          <Typography variant="h3">{`${t(
+            "Welcome"
+          )}, ${firstName} ${lastName}!`}</Typography>
+          <Typography variant="body1">{`${t("Email")}: ${email}`}</Typography>
+          <Typography variant="body1">{`${t("Role")}: ${t(
+            role?.toUpperCase()!
+          )}`}</Typography>
           <Button variant="contained" color="secondary" onClick={handleLogout}>
-            Logout
+            {t("Logout")}
           </Button>
 
           {/* only show button for ADMIN */}
@@ -41,9 +47,32 @@ const HomePage: React.FC = () => {
               color="info"
               onClick={() => navigate("/adminonly")}
             >
-              ADMIN ONLY ACCESS ⛔️
+              {t("AdminAccess")}
             </Button>
           )}
+
+          <Typography
+            component={Stack}
+            direction="row"
+            spacing={1}
+            fontSize="12px"
+          >
+            <Link
+              onClick={userCtx?.handleChangeLanguage}
+              underline="always"
+              sx={{ cursor: "pointer" }}
+            >
+              {t("EN")}
+            </Link>
+            <Typography variant="body2">|</Typography>
+            <Link
+              onClick={userCtx?.handleChangeLanguage}
+              underline="always"
+              sx={{ cursor: "pointer" }}
+            >
+              {t("CH")}
+            </Link>
+          </Typography>
         </Stack>
       </Container>
     </>
