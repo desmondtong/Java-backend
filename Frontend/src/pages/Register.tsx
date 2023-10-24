@@ -24,8 +24,6 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [role, setRole] = useState<string>("");
 
-  const [isInvalid, setIsInvalid] = useState(false);
-
   const roles = ["USER", "ADMIN"];
 
   const registerUser = async () => {
@@ -38,6 +36,12 @@ const Register: React.FC = () => {
     });
 
     if (res.ok) {
+      // capture login error msg
+      if (!firstname || !lastname || !email || !password || !role) {
+        return alert("Please fill up all field!");
+      } else if (res.data.message)
+        return alert(JSON.stringify(res.data.message));
+
       // set token and userinfo from registered info
       userCtx?.setToken(res.data.token);
       userCtx?.setUserInfo({
@@ -69,31 +73,35 @@ const Register: React.FC = () => {
             </Typography>
 
             <TextField
+              required
               label="First Name"
               variant="outlined"
               sx={{ width: "25%" }}
               onChange={(e) => setFirstname(e.target.value)}
             />
             <TextField
+              required
               label="Last Name"
               variant="outlined"
               sx={{ width: "25%" }}
               onChange={(e) => setLastname(e.target.value)}
             />
             <TextField
+              required
               label="Email"
               variant="outlined"
               sx={{ width: "25%" }}
               onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
+              required
               label="Password"
               variant="outlined"
               sx={{ width: "25%" }}
               onChange={(e) => setPassword(e.target.value)}
-              helperText={isInvalid && "Invalid zip code"}
             />
             <TextField
+              required
               select
               label="Role"
               variant="outlined"
