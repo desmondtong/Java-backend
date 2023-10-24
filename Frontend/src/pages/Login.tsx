@@ -1,10 +1,10 @@
 import {
-    Box,
-    Container,
-    Link,
-    Stack,
-    TextField,
-    Typography,
+  Box,
+  Container,
+  Link,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import jwtDecode from "jwt-decode";
@@ -27,8 +27,11 @@ const Login: React.FC = () => {
       email,
       password,
     });
-    console.log(res);
+
     if (res.ok) {
+      // capture login error msg
+      if (res.data.message) return alert(JSON.stringify(res.data.message));
+
       const decoded: any = jwtDecode(res.data.token);
 
       // set token and userinfo from decoded claims
