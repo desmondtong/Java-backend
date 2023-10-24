@@ -1,6 +1,11 @@
 # Login Registration App
 Simple user login and registration app leveraging i18next and react-i18next that allows multi-lingual web app.
 
+### English
+![image](https://github.com/desmondtong/Java-backend/assets/107420497/beea0b62-5187-4169-bcb8-790d422d3ee6)
+### Mandarin
+![image](https://github.com/desmondtong/Java-backend/assets/107420497/eff11bb2-7dfb-42e2-85b1-0cbeea427c44)
+
 ---
 ## Languages and Technologies Used
 
