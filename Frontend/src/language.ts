@@ -34,7 +34,7 @@ i18n
           Email: "电子邮件",
           Password: "密码",
           Register: "注册",
-          Account: "还没有账户？ ",
+          Account: "没有账户？ ",
           RegisterAcc: "注册账户",
           FirstName: "名",
           LastName: "姓",
