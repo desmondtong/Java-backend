@@ -33,6 +33,7 @@ const Login: React.FC = () => {
       if (res.data.message) return alert(JSON.stringify(res.data.message));
 
       const decoded: any = jwtDecode(res.data.token);
+      console.log(decoded);
 
       // set token and userinfo from decoded claims
       userCtx?.setToken(decoded.token);
@@ -40,6 +41,7 @@ const Login: React.FC = () => {
         firstName: decoded.firstname,
         lastName: decoded.lastname,
         role: decoded.role,
+        email: decoded.sub,
       });
 
       navigate("/homepage");

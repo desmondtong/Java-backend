@@ -10,6 +10,7 @@ const HomePage: React.FC = () => {
   const firstName = userCtx?.userInfo.firstName;
   const lastName = userCtx?.userInfo.lastName;
   const role = userCtx?.userInfo.role;
+  const email = userCtx?.userInfo.email;
 
   const handleLogout = () => {
     // clear token & no longer accessible to homepage
@@ -27,6 +28,7 @@ const HomePage: React.FC = () => {
           height="100vh"
         >
           <Typography variant="h3">{`Welcome, ${firstName} ${lastName}!`}</Typography>
+          <Typography variant="body1">{`Email: ${email}`}</Typography>
           <Typography variant="body1">{`Role: ${role}`}</Typography>
           <Button variant="contained" color="secondary" onClick={handleLogout}>
             Logout

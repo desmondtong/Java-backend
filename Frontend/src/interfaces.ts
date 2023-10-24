@@ -33,4 +33,5 @@ export interface UserInfo {
   firstName?: string;
   lastName?: string;
   role?: string;
+  email?: string;
 }
