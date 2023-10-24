@@ -6,17 +6,20 @@ import {
   Stack,
   TextField,
   Typography,
+  Link,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
 import { data } from "../interfaces";
+import { useTranslation } from "react-i18next";
 
 const Register: React.FC = () => {
   const fetchData = useFetch();
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
+  const { t } = useTranslation();
 
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastname] = useState<string>("");
@@ -24,7 +27,7 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [role, setRole] = useState<string>("");
 
-  const roles = ["USER", "ADMIN"];
+  const roles = [t("User"), t("Admin")];
 
   const registerUser = async () => {
     const res: data = await fetchData("/api/v1/auth/register", "POST", {
@@ -69,33 +72,33 @@ const Register: React.FC = () => {
             height="100vh"
           >
             <Typography variant="h5" textAlign="start" margin="2rem 0">
-              Register for an account
+              {t("RegisterAcc")}
             </Typography>
 
             <TextField
               required
-              label="First Name"
+              label={t("FirstName")}
               variant="outlined"
               sx={{ width: "25%" }}
               onChange={(e) => setFirstname(e.target.value)}
             />
             <TextField
               required
-              label="Last Name"
+              label={t("LastName")}
               variant="outlined"
               sx={{ width: "25%" }}
               onChange={(e) => setLastname(e.target.value)}
             />
             <TextField
               required
-              label="Email"
+              label={t("Email")}
               variant="outlined"
               sx={{ width: "25%" }}
               onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               required
-              label="Password"
+              label={t("Password")}
               variant="outlined"
               sx={{ width: "25%" }}
               onChange={(e) => setPassword(e.target.value)}
@@ -103,7 +106,7 @@ const Register: React.FC = () => {
             <TextField
               required
               select
-              label="Role"
+              label={t("Role")}
               variant="outlined"
               sx={{ width: "25%" }}
               defaultValue=""
@@ -122,7 +125,7 @@ const Register: React.FC = () => {
               sx={{ width: "20%" }}
               onClick={registerUser}
             >
-              Register
+              {t("Register")}
             </Button>
             <Button
               variant="outlined"
@@ -132,8 +135,32 @@ const Register: React.FC = () => {
                 navigate("/");
               }}
             >
-              Cancel
+              {t("Cancel")}
             </Button>
+
+            {/* choose language */}
+            <Typography
+              component={Stack}
+              direction="row"
+              spacing={1}
+              fontSize="12px"
+            >
+              <Link
+                onClick={userCtx?.handleChangeLanguage}
+                underline="always"
+                sx={{ cursor: "pointer" }}
+              >
+                {t("EN")}
+              </Link>
+              <Typography variant="body2">|</Typography>
+              <Link
+                onClick={userCtx?.handleChangeLanguage}
+                underline="always"
+                sx={{ cursor: "pointer" }}
+              >
+                {t("CH")}
+              </Link>
+            </Typography>
           </Stack>
         </Box>
       </Container>

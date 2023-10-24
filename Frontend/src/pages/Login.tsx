@@ -9,6 +9,7 @@ import {
 import Button from "@mui/material/Button";
 import jwtDecode from "jwt-decode";
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../context/user";
 import useFetch from "../hooks/useFetch";
@@ -18,6 +19,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
   const fetchData = useFetch();
+  const { t } = useTranslation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -62,37 +64,35 @@ const Login: React.FC = () => {
             height="100vh"
           >
             <Typography variant="h5" textAlign="start" margin="2rem 0">
-              Login
+              {t("Login")}
             </Typography>
             <TextField
-              label="Email"
+              label={t("Email")}
               variant="outlined"
               sx={{ width: "25%" }}
               onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
-              label="Password"
+              label={t("Password")}
               type="password"
               variant="outlined"
               sx={{ width: "25%" }}
               onChange={(e) => setPassword(e.target.value)}
             />
-
             <Button
               variant="contained"
               color="secondary"
               sx={{ width: "20%" }}
               onClick={handleLogin}
             >
-              Login
+              {t("Login")}
             </Button>
-
             <Typography
               textAlign="start"
               margin="1rem 0"
               sx={{ fontSize: "12px" }}
             >
-              {`Don't have an account? `}
+              {t("Account")}
               <Link
                 onClick={() => {
                   navigate("/register");
@@ -100,7 +100,31 @@ const Login: React.FC = () => {
                 underline="always"
                 sx={{ cursor: "pointer" }}
               >
-                Register
+                {t("Register")}
+              </Link>
+            </Typography>
+
+            {/* choose language */}
+            <Typography
+              component={Stack}
+              direction="row"
+              spacing={1}
+              fontSize="12px"
+            >
+              <Link
+                onClick={userCtx?.handleChangeLanguage}
+                underline="always"
+                sx={{ cursor: "pointer" }}
+              >
+                {t("EN")}
+              </Link>
+              <Typography variant="body2">|</Typography>
+              <Link
+                onClick={userCtx?.handleChangeLanguage}
+                underline="always"
+                sx={{ cursor: "pointer" }}
+              >
+                {t("CH")}
               </Link>
             </Typography>
           </Stack>

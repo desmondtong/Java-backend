@@ -27,6 +27,7 @@ export interface UserContextType {
   setToken: React.Dispatch<React.SetStateAction<string>>;
   userInfo: UserInfo;
   setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
+  handleChangeLanguage: (e: any) => void;
 }
 
 export interface UserInfo {
